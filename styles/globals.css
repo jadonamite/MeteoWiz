@@ -1,0 +1,120 @@
+
+@import "tailwindcss";
+/* Custom weather observation styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+/* Print styles for daily register */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-page-break {
+    page-break-before: always;
+  }
+  
+  table {
+    font-size: 12px !important;
+  }
+  
+  .container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Weather observation form enhancements */
+.weather-input:focus {
+  @apply ring-2 ring-blue-500 border-blue-500;
+}
+
+.weather-tab.active {
+  @apply border-blue-500 text-blue-600 bg-blue-50;
+}
+
+/* METAR terminal styling */
+.metar-terminal {
+  background: #1a1a1a;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Daily register table styling */
+.register-table {
+  font-size: 11px;
+  border-collapse: collapse;
+}
+
+.register-table th,
+.register-table td {
+  border: 1px solid #d97706;
+  padding: 2px 4px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.register-table th {
+  background-color: #fed7aa;
+  font-weight: 600;
+}
+
+.register-table tr:nth-child(even) {
+  background-color: #fffbeb;
+}
+
+/* Loading states */
+.loading-spinner {
+  @apply animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600;
+}
+
+/* Validation error styling */
+.validation-error {
+  @apply text-red-600 text-sm mt-1;
+}
+
+.validation-success {
+  @apply text-green-600 text-sm mt-1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .weather-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .metar-breakdown {
+    font-size: 12px;
+  }
+}
+
+/* Custom scrollbar for observation lists */
+.observation-list {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.observation-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.observation-list::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 3px;
+}
+
+.observation-list::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+.observation-list::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
