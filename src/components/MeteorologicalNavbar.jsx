@@ -49,7 +49,7 @@ const MeteorologicalNavbar = ({
         {/* Center Section - Agency Title */}
         <AgencyTitle 
           agency={stationConfig.agency}
-          airport={stationConfig.airport}
+        
         />
         
         {/* Right Section - Status */}
@@ -69,6 +69,11 @@ const MeteorologicalNavbar = ({
           id={stationConfig.id}
           network={stationConfig.network}
         />
+          <AgencyTitle 
+          
+          airport={stationConfig.airport}
+        />
+        
         
         {/* Right Section - Date and Time */}
         <DateTimeDisplay time={time} />

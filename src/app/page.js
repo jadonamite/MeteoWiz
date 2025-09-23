@@ -1,17 +1,9 @@
-import MeteorologicalNavbar from '@/components/MeteorologicalNavbar';
+import ServerTimeWrapper from '@/components/ServerTimeWrapper';
 
-export async function getServerSideProps() {
-  return {
-    props: {
-      serverTime: Date.now() // Pass server timestamp to client
-    }
-  };
-}
-
-export default function HomePage({ serverTime }) {
+export default function HomePage() {
   return (
     <div>
-      <MeteorologicalNavbar serverTime={serverTime} />
+      <ServerTimeWrapper />
     </div>
   );
 }
