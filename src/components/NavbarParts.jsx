@@ -25,28 +25,30 @@ export const SystemInfoBar = ({ config, onClose, className = "" }) => {
 
 // Station Logo Component
 export const StationLogo = ({ stationName, className = "" }) => {
-  return (
-    <div className={`flex items-center ${className}`}>
-      <div className="w-10 h-8 mr-3 relative">
-          <span className="text-2xl">🌤️</span>
+   return (
+      <div className={`flex items-center ${className}`}>
+         <div className="w-10 h-8 mr-3 relative">
+            <span className="text-5xl">🌤️</span>
+         </div>
+         <span className="text-black font-serif font-bold italic text-4xl">
+            Station:{stationName}
+         </span>
       </div>
-      <span className="text-black font-bold italic text-lg">Station:{stationName}</span>
-    </div>
-  );
+   );
 };
 
 // Agency Title Component
 export const AgencyTitle = ({ agency, airport, className = "" }) => {
-  return (
-    <div className={`text-center flex-1 ${className}`}>
-      <h1 className="text-blue-600 font-bold text-3xl tracking-wider leading-tight">
-        {agency}
-      </h1>
-      <div className="text-blue-500 text-sm font-medium tracking-widest -mt-1">
-        {airport}
+   return (
+      <div className={`text-center flex-1 ${className}`}>
+         <h1 className="text-blue-600 font-serif text-6xl tracking-tight leading-none">
+            {agency}
+         </h1>
+         <div className="text-blue-500 text-sm font-medium tracking-widest -mt-1">
+            {airport}
+         </div>
       </div>
-    </div>
-  );
+   );
 };
 
 // Status Component

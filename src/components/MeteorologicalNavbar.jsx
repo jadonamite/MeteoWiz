@@ -34,51 +34,41 @@ const MeteorologicalNavbar = ({
   }, []);
 
   return (
-    <div className="w-full bg-gray-200">
-      {/* Top Row - System Info */}
-      <SystemInfoBar 
-        config={sysConfig}
-        onClose={onClose}
-      />
-      
-      {/* Main Header Row */}
-      <div className="flex items-center justify-between px-3 py-1 bg-gray-200">
-        {/* Left Section - Logo and Station */}
-        <StationLogo stationName={stationConfig.name} />
-        
-        {/* Center Section - Agency Title */}
-        <AgencyTitle 
-          agency={stationConfig.agency}
-        
-        />
-        
-        {/* Right Section - Status */}
-        <StatusComponent 
-          isOnline={isOnline}
-          onLogout={onLogout}
-        />
-      </div>
-      
-      {/* Bottom Row - Navigation Values, Station ID, Date/Time */}
-      <div className="flex items-center justify-between px-3 py-1 bg-gray-200 border-t border-gray-400">
-        {/* Left Section - Navigation Values */}
-        <NavigationValues station={stationConfig} />
-        
-        {/* Center Section - Station ID */}
-        <StationID 
-          id={stationConfig.id}
-          network={stationConfig.network}
-        />
-          <AgencyTitle 
-          
-          airport={stationConfig.airport}
-        />
-        
-        
-        {/* Right Section - Date and Time */}
-        <DateTimeDisplay time={time} />
-      </div>
-    </div>
+     <div className="w-full bg-gray-200">
+        {/* Top Row - System Info */}
+        <SystemInfoBar config={sysConfig} onClose={onClose} />
+
+        {/* Main Header Row */}
+        <div className="flex items-center justify-between px-3 py-1 bg-gray-200">
+           {/* Left Section - Logo and Station */}
+           <div className="flex-1">
+              <StationLogo stationName={stationConfig.name} />
+           </div>
+
+           {/* Center Section - Agency Title */}
+           <div className="flex-[4] text-center font-serif">
+              <AgencyTitle agency={stationConfig.agency} />
+           </div>
+
+           {/* Right Section - Status */}
+           <div className="flex-1 text-right">
+              <StatusComponent isOnline={isOnline} onLogout={onLogout} />
+           </div>
+        </div>
+
+        {/* Bottom Row - Navigation Values, Station ID, Date/Time */}
+        <div className="flex items-center justify-between px-3 py-1 bg-gray-200  ">
+           {/* Left Section - Navigation Values */}
+           <NavigationValues station={stationConfig} />
+
+           {/* Center Section - Station ID */}
+           <StationID id={stationConfig.id} network={stationConfig.network} />
+           <AgencyTitle airport={stationConfig.airport} />
+
+           {/* Right Section - Date and Time */}
+           <DateTimeDisplay time={time} />
+        </div>
+     </div>
   );
 };
 
