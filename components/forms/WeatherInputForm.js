@@ -11,7 +11,7 @@ export default function WeatherInputForm({ observation, onChange }) {
       // Handle nested objects
       if (field.includes(".")) {
          const [parent, child] = field.split(".");
-         onChange({
+         onChange({gi
             [parent]: {
                ...observation[parent],
                [child]: value === "" ? null : parseFloat(value) || value,
