@@ -13,11 +13,10 @@ export const defaultStationConfig = {
 
 // System information configuration
 export const systemConfig = {
-  version: "MeteoWX 1.0",
-  poweredBy: "PSSIMATHEMATICS, NIGERIA",
-  website: "Website: Pssimathematicsbusiness.site"
+   version: "MeteoWIZ V.ALPHA",
+   poweredBy: " Jadonamite",
+   website: "Website: meteowx.xyz",
 };
-
 // Multiple station configurations example
 export const stationConfigs = {
   asaba: {
