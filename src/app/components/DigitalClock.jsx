@@ -11,9 +11,10 @@ export const GMTDigitalClock = ({ time, className = "" }) => {
   const seconds = gmtTime.getSeconds().toString().padStart(2, '0');
 
   return (
-    <span className={`bg-red-600 text-white px-1 font-mono text-sm font-bold ${className}`}>
-      {hours}:{minutes}:{seconds}
-    </span>
+     <span
+        className={`bg-red-300 text-black px-1 font-mono text-xl font-bold ${className}`}>
+        {hours}:{minutes}:{seconds}
+     </span>
   );
 };
 

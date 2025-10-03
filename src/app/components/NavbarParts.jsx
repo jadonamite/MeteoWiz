@@ -1,26 +1,22 @@
 import { formatDate } from '../hooks/useTime';
-import { GMTDigitalClock } from './DigitalClock'; // ADD THIS LINE
-
-
-
-
-
+import { GMTDigitalClock } from "./DigitalClock";
 
 // System Information Bar Component
 export const SystemInfoBar = ({ config, onClose, className = "" }) => {
-  return (
-    <div className={`flex items-center justify-between px-2 py-0.5 bg-gray-300 text-xs text-black ${className}`}>
-      <div>
-        {config.version}&nbsp;&nbsp;&nbsp;&nbsp;POWERED BY {config.poweredBy}&nbsp;&nbsp;&nbsp;&nbsp;{config.website}
+   return (
+      <div
+         className={`flex items-center justify-between px-2 py-0.5 bg-gray-300 text-xs text-black ${className}`}>
+         <div>
+            {config.version}&nbsp;&nbsp;&nbsp;&nbsp;POWERED BY{" "}
+            {config.poweredBy}&nbsp;&nbsp;&nbsp;&nbsp;{config.website}
+         </div>
+         <button
+            onClick={onClose}
+            className="text-black hover:text-gray-600 text-lg font-bold px-2">
+            ×
+         </button>
       </div>
-      <button 
-        onClick={onClose}
-        className="text-black hover:text-gray-600 text-lg font-bold px-2"
-      >
-        ×
-      </button>
-    </div>
-  );
+   );
 };
 
 // Station Logo Component
@@ -41,10 +37,10 @@ export const StationLogo = ({ stationName, className = "" }) => {
 export const AgencyTitle = ({ agency, airport, className = "" }) => {
    return (
       <div className={`text-center flex-1 ${className}`}>
-         <h1 className="text-blue-600 font-serif text-6xl tracking-tight leading-none">
+         <h1 className="text-[#1a75bb] font-serif text-4xl font-semibold  leading-none">
             {agency}
          </h1>
-         <div className="text-blue-500 text-sm font-medium tracking-widest -mt-1">
+         <div className="text-[#1a75bb] font-serif text-sm font-semibold tracking-widest -mt-1">
             {airport}
          </div>
       </div>
@@ -97,11 +93,9 @@ export const StationID = ({ id, network, className = "" }) => {
 // Date Time Display Component
 export const DateTimeDisplay = ({ time, className = "" }) => {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <span className="text-black font-bold text-sm">
-        {formatDate(time)}
-      </span>
-      <GMTDigitalClock time={time} />
-    </div>
+     <div className={`flex items-center gap-2 ${className}`}>
+        <span className="text-black font-bold text-lg">{formatDate(time)}</span>
+        <GMTDigitalClock time={time} />
+     </div>
   );
 };
