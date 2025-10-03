@@ -168,9 +168,9 @@ export const defaultStationConfig = {
 };
 
 export const systemConfig = {
-   version: "MeteoWIZ V.ALPHA",
-   poweredBy: " Jadonamite",
-   website: "Website: meteowx.xyz",
+  version: "MeteoWX 1.0",
+  poweredBy: "PSSIMATHEMATICS, NIGERIA",
+  website: "Website: Pssimathematicsbusiness.site"
 };
 ```
 
