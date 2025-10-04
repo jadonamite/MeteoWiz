@@ -80,25 +80,25 @@ export const NavigationValues = ({ station, className = "" }) => {
          className={`border border-gray-400 p-2 rounded shadow-md flex items-center gap-3 text-base text-black ${className}`}>
          <span>
             Lat:{" "}
-            <span className="bg-white px-1 border border-gray-400">
+            <span className="bg-gray-300 px-1 border border-gray-400">
                {station.lat}
             </span>
          </span>
          <span>
             Lon:{" "}
-            <span className="bg-white px-1 border border-gray-400">
+            <span className="bg-gray-300 px-1 border border-gray-400">
                {station.lon}
             </span>
          </span>
          <span>
             Elev:{" "}
-            <span className="bg-white px-1 border border-gray-400 h-full">
+            <span className="bg-gray-300 px-1 border border-gray-400 h-full">
                {station.elev}
             </span>
          </span>
          <span>
             Const:{" "}
-            <span className="bg-white px-1 border border-gray-400">
+            <span className="bg-gray-300 px-1 border border-gray-400">
                {station.const}
             </span>
          </span>

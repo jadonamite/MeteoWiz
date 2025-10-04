@@ -26,7 +26,7 @@ const TrendForecastSection = () => {
    };
 
    return (
-      <div className="bg-white border-2 border-gray-400 rounded">
+      <div className="bg-gray-300 border-2 border-gray-400 rounded">
          {/* Header */}
          <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5">
             <h2 className="font-bold text-sm">

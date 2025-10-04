@@ -251,7 +251,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Relative humidity</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {Math.round(derived.relativeHumidity)}
             </span>
             <span className="text-xs">%</span>
@@ -261,7 +261,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Vapor pressure</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {derived.vaporPressure}
             </span>
             <span className="text-xs">hPa</span>
@@ -271,7 +271,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Dew point</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {derived.dewPoint}
             </span>
             <span className="text-xs">°C</span>
@@ -281,7 +281,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Feel temperature</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {derived.feelTemperature}
             </span>
             <span className="text-xs">°C</span>
@@ -312,7 +312,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Ref. evapotranspiration (ETo)</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {derived.refEvapotranspiration}
             </span>
             <span className="text-xs">mm/h</span>
@@ -322,7 +322,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Est. amount of evaporation</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {derived.estAmountEvaporation}
             </span>
             <span className="text-xs">mm/h</span>
@@ -332,7 +332,7 @@ const DerivedValues = ({ observedData = {} }) => {
         <div className="flex items-center justify-between">
           <label className="text-xs font-medium w-32">Est. visibility</label>
           <div className="flex items-center gap-1">
-            <span className="w-12 h-6 px-1 text-xs bg-white border border-gray-300 flex items-center">
+            <span className="w-12 h-6 px-1 text-xs bg-gray-300 border border-gray-300 flex items-center">
               {derived.estVisibility}
             </span>
             <span className="text-xs">km</span>
@@ -768,7 +768,7 @@ const EnhancedWeatherWidget = () => {
       </div>
 
       {/* Additional Weather Data */}
-      <div className="bg-white border border-gray-300 p-2 text-xs">
+      <div className="bg-gray-300 border border-gray-300 p-2 text-xs">
         <div className="font-bold mb-1">Current Conditions</div>
         <div className="space-y-1">
           <div className="flex justify-between">
