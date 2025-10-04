@@ -46,7 +46,7 @@ const MeteorologicalNavbar = ({
            </div>
 
            {/* Center Section - Agency Title */}
-           <div className="flex-[3] text-center font-serif">
+           <div className="flex-[4] text-center font-serif">
               <AgencyTitle agency={stationConfig.agency} />
            </div>
 
