@@ -8,29 +8,29 @@ import ImagerySection from "./ImagerySection";
 /**
  * DashboardLayout
  *
- * Fixed-height dashboard layout using viewport units.
- * Ensures child sections respect their height percentages.
+ * 4-column dashboard with fixed viewport heights matching original design.
+ * Heights: Observed & Derived = 70vh, Trend & Imagery = 90vh
  */
 const DashboardLayout = () => {
    return (
-      <div className="flex gap-2 p-2 bg-gray-100 h-screen">
-         {/* Observed Values (70% height) */}
-         <div className="w-1/4 h-[70%] ">
+      <div className="flex gap-2 p-2 bg-gray-100 min-h-screen">
+         {/* Observed Values  */}
+         <div className="w-1/4 h-[68vh]">
             <ObservedValuesSection />
          </div>
 
-         {/* Derived Values (70% height) */}
-         <div className="w-3/10 h-[70%] ">
+         {/* Derived Values */}
+         <div className="w-3/10 h-[68vh]">
             <DerivedValuesSection />
          </div>
 
-         {/* Trend Forecast (90% height) */}
-         <div className="w-3/10 h-[90%] ">
+         {/* Trend Forecast  */}
+         <div className="w-3/10 h-[82vh]">
             <TrendForecastSection />
          </div>
 
-         {/* Imagery (90% height) */}
-         <div className="w-1/5 h-[90%] ">
+         {/* Imagery */}
+         <div className="w-1/5 h-[82vh]">
             <ImagerySection />
          </div>
       </div>

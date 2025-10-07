@@ -26,16 +26,16 @@ const TrendForecastSection = () => {
    };
 
    return (
-      <div className="bg-gray-300 border-2 border-gray-400 rounded">
+      <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col">
          {/* Header */}
-         <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5">
+         <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5 flex-shrink-0">
             <h2 className="font-bold text-sm">
                TREND LANDING FORECAST FOR DNAS
             </h2>
          </div>
 
-         {/* Content */}
-         <div className="p-3 space-y-2">
+         {/* Content  */}
+         <div className="p-3 space-y-2 flex-1">
             {/* Message Type and Time Row */}
             <div className="flex items-center gap-2">
                <span className="text-xs font-bold">Message:</span>
