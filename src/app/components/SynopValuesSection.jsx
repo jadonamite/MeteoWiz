@@ -43,7 +43,7 @@ const SynopValuesSection = () => {
    });
 
    return (
-      <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex  flex-col">
+      <div className="border-2 border-gray-400 rounded h-full flex  flex-col">
          {/* Content - Two rows of SYNOP groups */}
          <div className="flex-1 grid gap-4 overflow-auto">
             {/* First Row - Main SYNOP Groups */}

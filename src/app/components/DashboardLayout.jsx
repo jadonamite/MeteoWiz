@@ -18,12 +18,12 @@ const DashboardLayout = () => {
       <div className="flex gap-2 p-2 bg-gray-100 min-h-screen">
          {/* Left Section - Observed, Derived, and SYNOP stacked */}
          <div
-            className="flex flex-col gap-2"
+            className="flex flex-col "
             style={{ width: "calc(25% + 30% + 0.5rem)" }}>
             {/* Top Row - Observed and Derived side by side */}
             <div className="flex gap-2 h-[68vh]">
                {/* Observed Values */}
-               <div style={{ width: "calc(25% / (25% + 30%) * 100%)" }}>
+               <div style={{ width: "calc(30% / (25% + 30%) * 100%)" }}>
                   <ObservedValuesSection />
                </div>
 
