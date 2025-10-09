@@ -1,167 +1,240 @@
-// app/components/DerivedValuesSection.jsx
+// src/app/components/DerivedValuesSection.jsx
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import { useMetar } from "../context/MetarContext";
 
 const DerivedValuesSection = () => {
-   // State for derived values (calculated from observed data)
-   const [derivedData, setDerivedData] = useState({
-      relativeHumidity: "85",
-      vaporPressure: "29.6",
-      dewPoint: "23.9",
-      feelTemperature: "29",
-      heightBaseCloud: "9",
-      cloudBaseHeight: "270",
-      cloudBaseHeightYellow: "570",
-      refEvapotranspiration: "0.25",
-      estEvaporation: "",
-      estVisibility: "16",
-      slp: "1006.3",
-      slpTemp: "29.72",
-      mslp: "1015.5",
-      mslpTemp: "29.99",
-      qnh: "1015.9",
-      qnhTemp: "30.00",
-   });
+   const { observedData, derivedData, setDerivedData, stationInfo } =
+      useMetar();
+
+   // Calculate derived values whenever observed data changes
+   useEffect(() => {
+      calculateDerivedValues();
+   }, [observedData]);
+
+   /**
+    * Calculate all derived meteorological values from observed data
+    */
+   const calculateDerivedValues = () => {
+      const { dryBulb, wetBulb, digitalBarometer, cloudAmount } = observedData;
+      const { elevation } = stationInfo;
+
+      // Convert to numbers, handle null/empty values
+      const T = parseFloat(dryBulb) || 0;
+      const Tw = parseFloat(wetBulb) || 0;
+      const P = parseFloat(digitalBarometer) || 0;
+      const E = parseFloat(elevation) || 82.4;
+
+      // 1. VAPOR PRESSURE (e) - Magnus formula
+      const es = 6.112 * Math.exp((17.67 * Tw) / (Tw + 243.5));
+      const vaporPressure = es - 0.00066 * (1 + 0.00115 * Tw) * P * (T - Tw);
+
+      // 2. RELATIVE HUMIDITY (RH%) - Standard formula
+      const esT = 6.112 * Math.exp((17.67 * T) / (T + 243.5));
+      const relativeHumidity = (vaporPressure / esT) * 100;
+
+      // 3. DEW POINT (Td) - Magnus inverse formula
+      const ln = Math.log(vaporPressure / 6.112);
+      const dewPoint = (243.5 * ln) / (17.67 - ln);
+
+      // 4. FEEL TEMPERATURE (Heat Index approximation)
+      const feelTemperature = T + 0.33 * vaporPressure - 0.7 - 4.0;
+
+      // 5. CLOUD BASE HEIGHT - Espy's equation: height = 125 * (T - Td) meters
+      const heightBaseCloud = Math.round((125 * (T - dewPoint)) / 30); // in units of 30m
+      const cloudBaseHeight = heightBaseCloud * 30; // meters
+      const cloudBaseHeightFt = Math.round(cloudBaseHeight * 3.28084); // feet
+
+      // 6. REFERENCE EVAPOTRANSPIRATION (ETo) - Simplified Penman
+      const delta = (4098 * esT) / Math.pow(T + 237.3, 2);
+      const refEvapotranspiration = 0.408 * delta * 0.5; // Simplified, mm/h
+
+      // 7. ESTIMATED VISIBILITY - Based on RH
+      const estVisibility =
+         relativeHumidity > 95
+            ? 2
+            : relativeHumidity > 85
+            ? 5
+            : relativeHumidity > 75
+            ? 10
+            : 20;
+
+      // 8. SEA LEVEL PRESSURE (SLP) - Standard atmosphere reduction
+      const slp = P + E / 8.0; // Simplified formula
+
+      // 9. MEAN SEA LEVEL PRESSURE (MSLP) - More accurate reduction
+      const mslp =
+         P * Math.pow(1 - (0.0065 * E) / (T + 273.15 + 0.0065 * E), -5.257);
+
+      // 10. QNH - Altimeter setting
+      const qnh = P * Math.pow(1 - (0.0065 * E) / 288.15, -5.255);
+
+      // Convert hPa to inches Hg (1 hPa = 0.02953 inHg)
+      const slpInches = (slp * 0.02953).toFixed(2);
+      const mslpInches = (mslp * 0.02953).toFixed(2);
+      const qnhInches = (qnh * 0.02953).toFixed(2);
+
+      // Update derived data in context
+      setDerivedData({
+         relativeHumidity: relativeHumidity.toFixed(0),
+         vaporPressure: vaporPressure.toFixed(1),
+         dewPoint: dewPoint.toFixed(1),
+         feelTemperature: feelTemperature.toFixed(0),
+         heightBaseCloud: heightBaseCloud.toString(),
+         cloudBaseHeight: cloudBaseHeight.toString(),
+         cloudBaseHeightFt: cloudBaseHeightFt.toString(),
+         refEvapotranspiration: refEvapotranspiration.toFixed(2),
+         estEvaporation: "", // Not calculated - requires pan evaporation data
+         estVisibility: estVisibility.toString(),
+         slp: slp.toFixed(1),
+         slpInches,
+         mslp: mslp.toFixed(1),
+         mslpInches,
+         qnh: qnh.toFixed(1),
+         qnhInches,
+      });
+   };
 
    return (
-      <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col">
+      <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col overflow-hidden">
          {/* Header */}
          <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5 flex justify-between items-center flex-shrink-0">
             <h2 className="font-bold text-sm">DERIVED VALUES</h2>
             <button className="bg-yellow-200 border border-gray-500 px-2 py-0.5 text-xs hover:bg-yellow-300">
-               Agromst data
+               Agromet data
             </button>
          </div>
 
-         {/* Content - Two Column Layout - Scrollable */}
-         <div className="p-3 space-y-3  flex-1">
-            {/* Top Section - Humidity and Temperature */}
-            <div className="space-y-2">
-               <DerivedRow
-                  label="Relative humidity"
-                  value={derivedData.relativeHumidity}
-                  unit="%"
-               />
-               <DerivedRow
-                  label="vapor pressure"
-                  value={derivedData.vaporPressure}
-                  unit="hPa"
-               />
-               <DerivedRow
-                  label="Dew point"
-                  value={derivedData.dewPoint}
-                  unit="°C"
-               />
-               <DerivedRow
-                  label="Feel temperature"
-                  value={derivedData.feelTemperature}
-                  unit="°C"
-               />
+         {/* Content - Scrollable with better spacing */}
+         <div className="p-3 flex flex-col gap-2.5 overflow-y-auto flex-1">
+            {/* Basic Derived Values - Well spaced */}
+            <DerivedRow
+               label="Relative humidity"
+               value={derivedData.relativeHumidity || ""}
+               unit="%"
+            />
+            <DerivedRow
+               label="vapor pressure"
+               value={derivedData.vaporPressure || ""}
+               unit="hPa"
+            />
+            <DerivedRow
+               label="Dew point"
+               value={derivedData.dewPoint || ""}
+               unit="°C"
+            />
+            <DerivedRow
+               label="Feel temperature"
+               value={derivedData.feelTemperature || ""}
+               unit="°C"
+            />
 
-               {/* Height of base of cloud - Special Layout */}
-               <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold w-48">
-                     Height of base of Cl
-                  </span>
-                  <input
-                     type="text"
-                     value={derivedData.heightBaseCloud}
-                     readOnly
-                     className="border border-gray-400 px-2 py-1 text-sm w-16 bg-blue-100"
-                  />
-                  <span className="text-xs font-bold">60kt</span>
-                  <span className="text-xs">m/30</span>
-               </div>
-
-               {/* Cloud Base Heights - Colored Backgrounds */}
-               <div className="flex items-center gap-2 bg-green-200 px-2 py-1.5 rounded">
-                  <span className="text-xs font-bold flex-1">
-                     Cloud base height
-                  </span>
-                  <input
-                     type="text"
-                     value={derivedData.cloudBaseHeight}
-                     readOnly
-                     className="border border-gray-400 px-2 py-1 text-sm w-20 bg-green-300"
-                  />
-                  <input
-                     type="text"
-                     value={derivedData.cloudBaseHeightYellow}
-                     readOnly
-                     className="border border-gray-400 px-2 py-1 text-sm w-20 bg-yellow-300"
-                  />
-                  <span className="text-xs">m</span>
-               </div>
+            {/* Height of base of cloud - Special row */}
+            <div className="flex items-center gap-2 text-xs">
+               <span className="font-bold w-40">Height of base of Cl</span>
+               <span className="text-blue-600 font-bold">60kt</span>
+               <input
+                  type="text"
+                  value={derivedData.heightBaseCloud || ""}
+                  readOnly
+                  className="border border-gray-400 px-2 py-1 text-xs w-16 bg-blue-100 text-center font-bold"
+               />
+               <span className="italic">m/30</span>
             </div>
 
-            {/* Middle Section - Agrometeorological Data */}
-            <div className="bg-yellow-100 p-2 rounded">
-               <h3 className="text-xs font-bold mb-2 text-center">
-                  Agrometeorological data
+            {/* Cloud base height - Flex row with colored boxes */}
+            <div className="flex items-center gap-2 text-xs">
+               <span className="font-bold text-yellow-600 w-40">
+                  Height of base of Cl (CL)
+               </span>
+               <input
+                  type="text"
+                  value={derivedData.cloudBaseHeight || ""}
+                  readOnly
+                  className="border border-gray-400 px-2 py-1 text-xs w-20 bg-green-300 text-center font-bold"
+               />
+               <input
+                  type="text"
+                  value={derivedData.cloudBaseHeightFt || ""}
+                  readOnly
+                  className="border border-gray-400 px-2 py-1 text-xs w-20 bg-yellow-300 text-center font-bold"
+               />
+               <span className="italic">m</span>
+            </div>
+
+            {/* Agrometeorological Data Section */}
+            <div className="bg-gray-200 border border-gray-400 p-2.5 rounded space-y-2 mt-1">
+               <h3 className="text-xs font-bold text-center mb-2">
+                  Agromet data
                </h3>
-               <div className="space-y-2">
-                  <DerivedRow
-                     label="Ref. evapotranspiration (ETo)"
-                     value={derivedData.refEvapotranspiration}
-                     unit="mm/h"
-                     bgColor="bg-yellow-100"
-                  />
-                  <DerivedRow
-                     label="Est. amount of evaporation"
-                     value={derivedData.estEvaporation}
-                     unit="mm/h"
-                     bgColor="bg-yellow-100"
-                  />
-                  <DerivedRow
-                     label="Est. visibility"
-                     value={derivedData.estVisibility}
-                     unit="km"
-                     bgColor="bg-yellow-100"
-                  />
-               </div>
+               <DerivedRow
+                  label="Ref. evapotranspiration (ETo)"
+                  value={derivedData.refEvapotranspiration || ""}
+                  unit="mm/h"
+               />
+               <DerivedRow
+                  label="Est. amount of evaporation"
+                  value={derivedData.estEvaporation || ""}
+                  unit="mm/h"
+               />
+               <DerivedRow
+                  label="Est. visiblity"
+                  value={derivedData.estVisibility || ""}
+                  unit="km"
+               />
             </div>
 
-            {/* Bottom Section - Pressure Values in Grid */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-               {/* SLP Column */}
-               <div className="space-y-2">
-                  <PressureRow
+            {/* Pressure Values - 2 Column Grid with proper spacing */}
+            <div className="space-y-2 mt-2 pt-2 border-t-2 border-gray-400">
+               {/* SLP Row */}
+               <div className="grid grid-cols-2 gap-4">
+                  <PressureCell
                      label="SLP"
-                     value={derivedData.slp}
+                     value={derivedData.slp || ""}
                      unit="hPa"
-                     tempValue={derivedData.slpTemp}
-                     tempUnit="inches"
+                  />
+                  <PressureCell
+                     value={derivedData.slpInches || ""}
+                     unit="inches"
+                     noLabel
                   />
                </div>
 
-               {/* MSLP Column */}
-               <div className="space-y-2">
-                  <PressureRow
+               {/* MSLP Row */}
+               <div className="grid grid-cols-2 gap-4">
+                  <PressureCell
                      label="MSLP"
-                     value={derivedData.mslp}
+                     value={derivedData.mslp || ""}
                      unit="hPa"
-                     tempValue={derivedData.mslpTemp}
-                     tempUnit="inches"
+                  />
+                  <PressureCell
+                     value={derivedData.mslpInches || ""}
+                     unit="inches"
+                     noLabel
                   />
                </div>
 
-               {/* QNH Column - Full Width */}
-               <div className="col-span-2">
-                  <PressureRow
+               {/* QNH Row */}
+               <div className="grid grid-cols-2 gap-4">
+                  <PressureCell
                      label="QNH"
-                     value={derivedData.qnh}
+                     value={derivedData.qnh || ""}
                      unit="hPa"
-                     tempValue={derivedData.qnhTemp}
-                     tempUnit="inches"
+                  />
+                  <PressureCell
+                     value={derivedData.qnhInches || ""}
+                     unit="inches"
+                     noLabel
                   />
                </div>
             </div>
 
-            {/* LLWAS Button */}
-            <div className="flex justify-center">
-               <button className="bg-green-500 text-white font-bold px-4 py-1 text-xs hover:bg-green-600 rounded">
-                  LLWAS
+            {/* LLWAS Button - Properly centered */}
+            <div className="flex items-center justify-center gap-2 pt-3 mt-auto">
+               <span className="text-blue-600 font-bold text-sm">LLWAS</span>
+               <button className="bg-green-500 text-white font-bold px-3 py-1 text-xs hover:bg-green-600 rounded">
+                  !
                </button>
             </div>
          </div>
@@ -169,38 +242,32 @@ const DerivedValuesSection = () => {
    );
 };
 
-// Reusable Derived Row Component
-const DerivedRow = ({ label, value, unit, bgColor = "" }) => (
-   <div className={`flex items-center gap-2 ${bgColor}`}>
-      <span className="text-xs font-bold w-48">{label}</span>
+// Reusable Derived Row Component (read-only) with better alignment
+const DerivedRow = ({ label, value, unit }) => (
+   <div className="flex items-center gap-2 text-sm">
+      <span className="font-bold w-52">{label}</span>
       <input
          type="text"
          value={value}
          readOnly
-         className="border border-gray-400 px-2 py-1 text-sm w-20 bg-gray-50"
+         className="border border-gray-400 px-2 py-1 text-xs w-24 bg-white text-center"
       />
-      <span className="text-xs">{unit}</span>
+      <span className="italic w-14 text-right">{unit}</span>
    </div>
 );
 
-// Reusable Pressure Row Component (for SLP, MSLP, QNH)
-const PressureRow = ({ label, value, unit, tempValue, tempUnit }) => (
-   <div className="flex items-center gap-2">
-      <span className="text-xs font-bold w-16">{label}</span>
+// Pressure Cell Component for grid layout with better structure
+const PressureCell = ({ label, value, unit, noLabel = false }) => (
+   <div className="flex items-center gap-2 text-xs">
+      {label && <span className="font-bold w-14">{label}</span>}
+      {noLabel && <span className="w-14"></span>}
       <input
          type="text"
          value={value}
          readOnly
-         className="border border-gray-400 px-2 py-1 text-sm w-16 bg-gray-50"
+         className="border border-gray-400 px-2 py-1 text-xs flex-1 bg-white text-center"
       />
-      <span className="text-xs">{unit}</span>
-      <input
-         type="text"
-         value={tempValue}
-         readOnly
-         className="border border-gray-400 px-2 py-1 text-sm w-16 bg-gray-50"
-      />
-      <span className="text-xs">{tempUnit}</span>
+      <span className="italic w-14 text-right">{unit}</span>
    </div>
 );
 

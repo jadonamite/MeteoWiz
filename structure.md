@@ -19,6 +19,7 @@
 │   │   │   ├── DerivedValuesSection.jsx
 │   │   │   ├── DigitalClock.jsx
 │   │   │   ├── ImagerySection.jsx
+│   │   │   ├── MetarActionsBar.jsx
 │   │   │   ├── MeteorologicalNavbar.jsx
 │   │   │   ├── NavbarParts.jsx
 │   │   │   ├── ObservedValuesSection.jsx
@@ -28,6 +29,8 @@
 │   │   │   └── TrendForecastSection.jsx
 │   │   ├── config
 │   │   │   └── stations.js
+│   │   ├── context
+│   │   │   └── MetarContext.jsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── hooks
@@ -38,4 +41,4 @@
 │       └── test.jsx
 └── structure.md
 
-8 directories, 31 files
+9 directories, 33 files
