@@ -23,6 +23,7 @@
 │   │   │   ├── NavbarParts.jsx
 │   │   │   ├── ObservedValuesSection.jsx
 │   │   │   ├── ServerTimeWrapper.jsx
+│   │   │   ├── SynopValuesSection.jsx
 │   │   │   ├── test.jsx
 │   │   │   └── TrendForecastSection.jsx
 │   │   ├── config
@@ -33,9 +34,8 @@
 │   │   │   └── useTime.js
 │   │   ├── layout.js
 │   │   └── page.js
-│   ├── components
-│   │   └── test.jsx
-│   └── structure.md
+│   └── components
+│       └── test.jsx
 └── structure.md
 
 8 directories, 31 files

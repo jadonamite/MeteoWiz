@@ -195,7 +195,7 @@ const ObservedValuesSection = () => {
             <div className="flex gap-2 text-xs">
                <span className="font-bold">RVR1</span>
                <span>RVR2</span>
-               <span className="bg-green-300 px-2">Grade 1</span>
+               <span className="bg-red-400 text-white px-2">Refresh</span>
                <span>Decode</span>
             </div>
          </div>

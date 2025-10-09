@@ -74,37 +74,60 @@ export const StatusComponent = ({
 };
 
 // Navigation Values Component
+// export const NavigationValues = ({ station, className = "" }) => {
+//    return (
+//       <div
+//          className={`border border-gray-400 p-2 rounded shadow-md flex items-center gap-3 text-base text-black ${className}`}>
+//          <span>
+//             Lat:{" "}
+//             <span className="bg-gray-300 px-1 border border-gray-400 h-full">
+//                {station.lat}
+//             </span>
+//          </span>
+//          <span>
+//             Lon:{" "}
+//             <span className="bg-gray-300 px-1 border border-gray-400">
+//                {station.lon}
+//             </span>
+//          </span>
+//          <span>
+//             Elev:{" "}
+//             <span className="bg-gray-300 px-1 border border-gray-400 h-full">
+//                {station.elev}
+//             </span>
+//          </span>
+//          <span>
+//             Const:{" "}
+//             <span className="bg-gray-300 px-1 border border-gray-400">
+//                {station.const}
+//             </span>
+//          </span>
+//       </div>
+//    );
+// };
 export const NavigationValues = ({ station, className = "" }) => {
+   const values = [
+      { label: "Lat", value: station.lat },
+      { label: "Lon", value: station.lon },
+      { label: "Elev", value: station.elev },
+      { label: "Const", value: station.const },
+   ];
+
    return (
       <div
-         className={`border border-gray-400 p-2 rounded shadow-md flex items-center gap-3 text-base text-black ${className}`}>
-         <span>
-            Lat:{" "}
-            <span className="bg-gray-300 px-1 border border-gray-400">
-               {station.lat}
+         className={`border border-gray-400 p-2 rounded shadow-md flex items-center gap-3 text-base h-10 text-black ${className}`}>
+         {values.map(({ label, value }) => (
+            <span key={label}>
+               {label}:{" "}
+               <span className="bg-gray-300 px-1 border border-gray-400 h-full inline-flex items-center">
+                  {value}
+               </span>
             </span>
-         </span>
-         <span>
-            Lon:{" "}
-            <span className="bg-gray-300 px-1 border border-gray-400">
-               {station.lon}
-            </span>
-         </span>
-         <span>
-            Elev:{" "}
-            <span className="bg-gray-300 px-1 border border-gray-400 h-full">
-               {station.elev}
-            </span>
-         </span>
-         <span>
-            Const:{" "}
-            <span className="bg-gray-300 px-1 border border-gray-400">
-               {station.const}
-            </span>
-         </span>
+         ))}
       </div>
    );
 };
+
 
 // Station ID Component
 export const StationID = ({ id, network, className = "" }) => {
