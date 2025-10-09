@@ -41,7 +41,7 @@ const MetarActionsBar = () => {
 
    return (
       <div className="w-full bg-white border-t-2 border-gray-300 shadow-md">
-         <div className="flex items-center justify-between gap-3 px-4 py-3">
+         <div className="flex items-center justify-center gap-8  px-4 py-3">
             {/* Action Buttons Group */}
             <div className="flex gap-2">
                <ActionButton
@@ -72,7 +72,7 @@ const MetarActionsBar = () => {
             </div>
 
             {/* METAR Code Display */}
-            <div className="flex-1 flex justify-end">
+            <div className=" flex ">
                <div className="bg-yellow-50 border-2 border-yellow-400 rounded px-6 py-2 shadow-sm">
                   <code className="text-sm font-mono font-semibold text-gray-900 tracking-wide">
                      {metarCode}

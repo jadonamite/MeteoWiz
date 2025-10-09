@@ -45,18 +45,18 @@ const DashboardLayout = () => {
             </div>
 
             {/* Trend Forecast - 30% width, 82vh height */}
-            <div className="w-3/10 h-[82vh]">
+            <div className="w-3/10 h-[screen]">
                <TrendForecastSection />
             </div>
 
             {/* Imagery - 15% width, 82vh height */}
-            <div className="w-1/5 h-[82vh]">
+            <div className="w-1/5 h-[screen]">
                <ImagerySection />
             </div>
          </div>
 
          {/* Bottom Action Bar - Full width, fixed at bottom */}
-         <div className="mt-auto  flex justify-center align-center">
+         <div className="mt-auto  ">
             <MetarActionsBar />
          </div>
       </div>
