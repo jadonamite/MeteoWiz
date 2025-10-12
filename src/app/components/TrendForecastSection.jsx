@@ -1,201 +1,236 @@
 "use client";
 
-import { useState } from "react";
+import { useMetar } from "../context/MetarContext";
 
 const TrendForecastSection = () => {
-   // State for trend/forecast form inputs
-   const [forecastData, setForecastData] = useState({
-      message: "METAR",
-      time: "0830",
-      wind: "21008KT",
-      windVis: "8000",
-      temp: "27",
-      dew: "24",
-      qfe: "1006",
-      qfeDec: "29.72",
-      qnh: "1015",
-      qnhDec: "30.00",
-      weather: "NIL",
-      cloud: "SCT009",
-      remarks: "",
-   });
+   const { trendData, setTrendData, observedData, derivedData } = useMetar();
 
-   // Handle input changes
+   // Handle input changes - updates context directly
    const handleChange = (field, value) => {
-      setForecastData((prev) => ({ ...prev, [field]: value }));
+      setTrendData((prev) => ({ ...prev, [field]: value }));
+   };
+
+   // Auto-populate from observed/derived data
+   const handleAutoPopulate = () => {
+      const windCode =
+         observedData.windDirection && observedData.windSpeed
+            ? `${observedData.windDirection.padStart(
+                 3,
+                 "0"
+              )}${observedData.windSpeed.padStart(2, "0")}KT`
+            : null;
+
+      const visibilityCode = observedData.visibility || null;
+
+      setTrendData((prev) => ({
+         ...prev,
+         windCode,
+         visibilityCode,
+         temperature: observedData.dryBulb,
+         dewPointTemp: derivedData.dewPoint,
+         qfe: derivedData.qfe || prev.qfe,
+         qnh: derivedData.qnh,
+      }));
    };
 
    return (
-      <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col">
+      <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col overflow-hidden">
          {/* Header */}
-         <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5 flex-shrink-0">
+         <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5 flex justify-between items-center flex-shrink-0">
             <h2 className="font-bold text-sm">
                TREND LANDING FORECAST FOR DNAS
             </h2>
          </div>
 
-         {/* Content  */}
-         <div className="p-3 space-y-2 flex-1">
-            {/* Message Type and Time Row */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold">Message:</span>
+         {/* Content - Scrollable */}
+         <div className="p-3 flex flex-col gap-2.5 overflow-y-auto flex-1">
+            {/* Message Type and Time */}
+            <div className="flex items-center gap-2 text-xs">
+               <span className="font-bold w-24">Message:</span>
                <select
-                  value={forecastData.message}
-                  onChange={(e) => handleChange("message", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-24">
+                  value={trendData.messageType || "METAR"}
+                  onChange={(e) => handleChange("messageType", e.target.value)}
+                  className="border border-gray-400 px-2 py-1 text-xs flex-1">
                   <option value="METAR">METAR</option>
                   <option value="SPECI">SPECI</option>
                   <option value="TAF">TAF</option>
                </select>
-
-               <span className="text-xs font-bold ml-4">Time</span>
+               <span className="font-bold">Time</span>
                <input
                   type="text"
-                  value={forecastData.time}
+                  value={trendData.time || ""}
                   onChange={(e) => handleChange("time", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-20"
+                  placeholder="0830"
+                  className="border border-gray-400 px-2 py-1 text-xs w-20"
                />
+            </div>
 
-               <button className="bg-gray-300 border border-gray-500 px-3 py-1 text-xs hover:bg-gray-400 ml-auto">
+            {/* Uncheck to add checkbox row */}
+            <div className="flex items-center gap-2 text-xs">
+               <input
+                  type="checkbox"
+                  checked={trendData.uncheckToAdd || false}
+                  onChange={(e) =>
+                     handleChange("uncheckToAdd", e.target.checked)
+                  }
+                  className="w-4 h-4"
+               />
+               <span className="font-bold">Uncheck to add</span>
+               <button
+                  onClick={handleAutoPopulate}
+                  className="ml-auto bg-gray-400 border border-gray-500 px-3 py-1 text-xs hover:bg-gray-500">
                   Retrieve
                </button>
             </div>
 
-            {/* Checkbox */}
-            <div className="flex items-center gap-2">
-               <input type="checkbox" id="uncheck-edit" className="w-3 h-3" />
-               <label
-                  htmlFor="uncheck-edit"
-                  className="text-xs text-blue-600 underline cursor-pointer">
-                  Uncheck to edit message
-               </label>
-            </div>
-
-            {/* Wind Row */}
-            <ForecastInputRow
-               label="Wind"
-               value={forecastData.wind}
-               onChange={(v) => handleChange("wind", v)}
-               secondLabel="Vis"
-               secondValue={forecastData.windVis}
-               onSecondChange={(v) => handleChange("windVis", v)}
-            />
-
-            {/* Temperature Row */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold w-16">Temp</span>
-               <input
-                  type="text"
-                  value={forecastData.temp}
-                  onChange={(e) => handleChange("temp", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-16 bg-yellow-100"
+            {/* Wind Section */}
+            <div className="space-y-2">
+               <div className="font-bold text-xs bg-gray-400 px-2 py-1 border-y border-gray-500">
+                  Wind
+               </div>
+               <InputRow
+                  label="Wind"
+                  value={trendData.windCode || ""}
+                  onChange={(v) => handleChange("windCode", v)}
+                  placeholder="21008KT"
+                  unit=""
                />
-               <span className="text-xs">°C</span>
-
-               <span className="text-xs font-bold ml-4">Dew</span>
-               <input
-                  type="text"
-                  value={forecastData.dew}
-                  onChange={(e) => handleChange("dew", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-16 bg-yellow-100"
+               <InputRow
+                  label="Temp"
+                  value={trendData.temperature || ""}
+                  onChange={(v) => handleChange("temperature", v)}
+                  unit="°C"
                />
-               <span className="text-xs">°C</span>
-            </div>
-
-            {/* QFE Row */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold w-16">QFE</span>
-               <input
-                  type="text"
-                  value={forecastData.qfe}
-                  onChange={(e) => handleChange("qfe", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-20 bg-yellow-100"
-               />
-               <span className="text-xs">hPa</span>
-               <input
-                  type="text"
-                  value={forecastData.qfeDec}
-                  onChange={(e) => handleChange("qfeDec", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-20 bg-yellow-100"
-               />
-               <span className="text-xs">inches</span>
-            </div>
-
-            {/* QNH Row */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold w-16">QNH</span>
-               <input
-                  type="text"
-                  value={forecastData.qnh}
-                  onChange={(e) => handleChange("qnh", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-20 bg-yellow-100"
-               />
-               <span className="text-xs">hPa</span>
-               <input
-                  type="text"
-                  value={forecastData.qnhDec}
-                  onChange={(e) => handleChange("qnhDec", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm w-20 bg-yellow-100"
-               />
-               <span className="text-xs">inches</span>
-            </div>
-
-            {/* Weather Row */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold w-16">Weather</span>
-               <input
-                  type="text"
-                  value={forecastData.weather}
-                  onChange={(e) => handleChange("weather", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm flex-1 bg-yellow-100"
+               <InputRow
+                  label="Vis"
+                  value={trendData.visibilityCode || ""}
+                  onChange={(v) => handleChange("visibilityCode", v)}
+                  placeholder="8000"
+                  unit=""
                />
             </div>
 
-            {/* Cloud Row */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold w-16">Cloud</span>
-               <input
-                  type="text"
-                  value={forecastData.cloud}
-                  onChange={(e) => handleChange("cloud", e.target.value)}
-                  className="border border-gray-400 px-2 py-1 text-sm flex-1 bg-yellow-100"
+            {/* Temperature Section */}
+            <div className="space-y-2">
+               <div className="font-bold text-xs bg-gray-400 px-2 py-1 border-y border-gray-500">
+                  Temp
+               </div>
+               <InputRow
+                  label="Temp"
+                  value={trendData.temperature || ""}
+                  onChange={(v) => handleChange("temperature", v)}
+                  unit="°C"
+               />
+               <InputRow
+                  label="Dew"
+                  value={trendData.dewPointTemp || ""}
+                  onChange={(v) => handleChange("dewPointTemp", v)}
+                  unit="°C"
                />
             </div>
 
-            {/* Trend & RMK Label */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold">Trend</span>
-               <span className="text-xs font-bold ml-auto">& RMK</span>
+            {/* Pressure Section */}
+            <div className="space-y-2">
+               <InputRow
+                  label="QFE"
+                  value={trendData.qfe || ""}
+                  onChange={(v) => handleChange("qfe", v)}
+                  unit="hPa"
+               />
+               <InputRow
+                  label="QNH"
+                  value={trendData.qnh || ""}
+                  onChange={(v) => handleChange("qnh", v)}
+                  unit="inches"
+               />
             </div>
 
-            {/* Remarks Textarea */}
-            <textarea
-               value={forecastData.remarks}
-               onChange={(e) => handleChange("remarks", e.target.value)}
-               className="border border-gray-400 px-2 py-1 text-xs w-full h-16 resize-none"
-               placeholder="Remarks"
-            />
+            {/* Weather */}
+            <div className="flex items-center gap-2 text-xs">
+               <span className="font-bold w-24">Weather</span>
+               <select
+                  value={trendData.weatherCode || "NIL"}
+                  onChange={(e) => handleChange("weatherCode", e.target.value)}
+                  className="border border-gray-400 px-2 py-1 text-xs flex-1 bg-yellow-100">
+                  <option value="NIL">NIL</option>
+                  <option value="RA">RA - Rain</option>
+                  <option value="DZ">DZ - Drizzle</option>
+                  <option value="TS">TS - Thunderstorm</option>
+                  <option value="FG">FG - Fog</option>
+                  <option value="BR">BR - Mist</option>
+                  <option value="HZ">HZ - Haze</option>
+                  <option value="SQ">SQ - Squall</option>
+               </select>
+            </div>
 
-            {/* Officer Input and Checkbox */}
-            <div className="flex items-center gap-2">
-               <span className="text-xs font-bold">Officer</span>
+            {/* Cloud */}
+            <div className="flex items-center gap-2 text-xs">
+               <span className="font-bold w-24">Cloud</span>
                <input
                   type="text"
+                  value={trendData.cloudCode || ""}
+                  onChange={(e) => handleChange("cloudCode", e.target.value)}
+                  placeholder="SCT009"
+                  className="border border-gray-400 px-2 py-1 text-xs flex-1 bg-yellow-100"
+               />
+            </div>
+
+            {/* Trend */}
+            <div className="flex items-center gap-2 text-xs">
+               <span className="font-bold w-24">Trend</span>
+               <select
+                  value={trendData.trend || ""}
+                  onChange={(e) => handleChange("trend", e.target.value)}
+                  className="border border-gray-400 px-2 py-1 text-xs flex-1">
+                  <option value="">Select...</option>
+                  <option value="NOSIG">NOSIG - No Significant Change</option>
+                  <option value="BECMG">BECMG - Becoming</option>
+                  <option value="TEMPO">TEMPO - Temporary</option>
+                  <option value="PROB30">PROB30 - Probability 30%</option>
+                  <option value="PROB40">PROB40 - Probability 40%</option>
+               </select>
+               <input
+                  type="checkbox"
+                  checked={trendData.rmk || false}
+                  onChange={(e) => handleChange("rmk", e.target.checked)}
+                  className="w-4 h-4"
+               />
+               <span className="font-bold">& RMK</span>
+            </div>
+
+            {/* Remarks */}
+            <div className="flex flex-col gap-1.5 text-xs">
+               <span className="font-bold">Remarks</span>
+               <textarea
+                  value={trendData.remarks || ""}
+                  onChange={(e) => handleChange("remarks", e.target.value)}
+                  placeholder="Enter remarks..."
+                  className="border border-gray-400 px-2 py-1 text-xs h-20 resize-none bg-yellow-50"
+               />
+            </div>
+
+            {/* Officer */}
+            <div className="flex items-center gap-2 text-xs mt-auto">
+               <span className="font-bold w-24">Officer</span>
+               <input
+                  type="text"
+                  value={trendData.officer || ""}
+                  onChange={(e) => handleChange("officer", e.target.value)}
                   placeholder="OSAKWE MLN"
                   className="border border-gray-400 px-2 py-1 text-xs flex-1"
                />
-               <input type="checkbox" className="w-3 h-3" />
+               <input type="checkbox" className="w-4 h-4" />
             </div>
 
-            {/* Bottom Buttons */}
-            <div className="flex gap-2">
-               <button className="bg-gray-300 border border-gray-500 px-3 py-1 text-xs hover:bg-gray-400 flex-1">
+            {/* Action Buttons */}
+            <div className="flex gap-2 pt-2">
+               <button className="bg-gray-400 border border-gray-500 px-4 py-1 text-xs hover:bg-gray-500 flex-1">
                   Read
                </button>
-               <button className="bg-red-400 border border-gray-500 px-3 py-1 text-xs hover:bg-red-500 flex-1 text-white font-bold">
+               <button className="bg-red-500 text-white font-bold px-4 py-1 text-xs hover:bg-red-600 flex-1">
                   Print MET REPORT
                </button>
-               <button className="bg-blue-400 border border-gray-500 px-3 py-1 text-xs hover:bg-blue-500 flex-1 text-white font-bold">
+               <button className="bg-blue-500 text-white font-bold px-4 py-1 text-xs hover:bg-blue-600 flex-1">
                   Build METAR
                </button>
             </div>
@@ -204,31 +239,18 @@ const TrendForecastSection = () => {
    );
 };
 
-// Reusable Input Row for two fields side-by-side
-const ForecastInputRow = ({
-   label,
-   value,
-   onChange,
-   secondLabel,
-   secondValue,
-   onSecondChange,
-}) => (
-   <div className="flex items-center gap-2">
-      <span className="text-xs font-bold w-16">{label}</span>
+// Reusable Input Row Component
+const InputRow = ({ label, value, onChange, unit, placeholder = "" }) => (
+   <div className="flex items-center gap-2 text-xs">
+      <span className="font-bold w-24">{label}</span>
       <input
          type="text"
          value={value}
          onChange={(e) => onChange(e.target.value)}
-         className="border border-gray-400 px-2 py-1 text-sm w-24 bg-yellow-100"
+         placeholder={placeholder}
+         className="border border-gray-400 px-2 py-1 text-xs flex-1"
       />
-
-      <span className="text-xs font-bold ml-4">{secondLabel}</span>
-      <input
-         type="text"
-         value={secondValue}
-         onChange={(e) => onSecondChange(e.target.value)}
-         className="border border-gray-400 px-2 py-1 text-sm w-20 bg-yellow-100"
-      />
+      {unit && <span className="italic w-14 text-right">{unit}</span>}
    </div>
 );
 

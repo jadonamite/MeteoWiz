@@ -1,4 +1,3 @@
-// src/app/components/DerivedValuesSection.jsx
 "use client";
 
 import { useEffect } from "react";

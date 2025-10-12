@@ -1,4 +1,4 @@
-// src/app/components/ObservedValuesSection.jsx
+
 "use client";
 
 import { useMetar } from "../context/MetarContext";

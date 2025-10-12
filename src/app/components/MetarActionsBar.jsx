@@ -1,4 +1,3 @@
-// src/app/components/MetarActionsBar.jsx
 "use client";
 
 import { useMetar } from "../context/MetarContext";
