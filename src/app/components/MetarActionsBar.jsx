@@ -90,7 +90,7 @@ const MetarActionsBar = () => {
 const ActionButton = ({ onClick, className, label }) => (
    <button
       onClick={onClick}
-      className={`px-5 py-2 text-white font-semibold rounded shadow-md 
+      className={`px-3 py-2 text-white  rounded shadow-md 
                 transition-all duration-200 hover:shadow-lg active:scale-95 
                 ${className}`}
       aria-label={label}>

@@ -245,12 +245,12 @@ const DerivedValuesSection = () => {
 // Reusable Derived Row Component (read-only) with better alignment
 const DerivedRow = ({ label, value, unit }) => (
    <div className="flex items-center gap-2 text-sm">
-      <span className="font-bold w-52">{label}</span>
+      <span className="font-bold w-65">{label}</span>
       <input
          type="text"
          value={value}
          readOnly
-         className="border border-gray-400 px-2 py-1 text-xs w-24 bg-white text-center"
+         className="border border-gray-400 px-2 py-1 text-xs w-35 bg-white text-center"
       />
       <span className="italic w-14 text-right">{unit}</span>
    </div>
@@ -259,7 +259,7 @@ const DerivedRow = ({ label, value, unit }) => (
 // Pressure Cell Component for grid layout with better structure
 const PressureCell = ({ label, value, unit, noLabel = false }) => (
    <div className="flex items-center gap-2 text-xs">
-      {label && <span className="font-bold w-14">{label}</span>}
+      {label && <span className="font-bold w-18">{label}</span>}
       {noLabel && <span className="w-14"></span>}
       <input
          type="text"
