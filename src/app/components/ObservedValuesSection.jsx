@@ -46,17 +46,23 @@ const ObservedValuesSection = () => {
          <div className="bg-gray-300 border-b-2 border-gray-400 px-2 py-1 flex-shrink-0 flex justify-between items-start">
             <h2 className="font-bold text-xs pt-1">OBSERVED VALUES</h2>
 
-            <div className="grid  gap-1">
+            <div className=" absolute grid  gap-1">
                <button
                   onClick={handleRetrieve}
-                  className="bg-blue-400 text-white border border-gray-600 px-2 py-0.5 text-xs hover:bg-blue-500">
+                  className="bg-blue-400 text-white border-2 border-gray-600 px-2 py-0.5 text-xs hover:bg-blue-500"
+                  style={{ boxShadow: "2px 2px 0px rgba(0,0,0,0.2)" }}>
                   Retrieve
                </button>
-               <button className="bg-gray-400 border border-gray-600 px-2 py-0.5 text-xs hover:bg-gray-500">
+
+               <button
+                  className="bg-gray-400 border-2 border-gray-600 px-2 py-0.5 text-xs hover:bg-gray-500"
+                  style={{ boxShadow: "2px 2px 0px rgba(0,0,0,0.2)" }}>
                   Acquire
                </button>
 
-               <button className="bg-gray-400 border border-gray-600 px-2 py-0.5 text-xs hover:bg-gray-500 ">
+               <button
+                  className="bg-gray-400 border-2 border-gray-600 px-2 py-0.5 text-xs hover:bg-gray-500 "
+                  style={{ boxShadow: "2px 2px 0px rgba(0,0,0,0.2)" }}>
                   Meteo
                </button>
             </div>

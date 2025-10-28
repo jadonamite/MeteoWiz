@@ -2,6 +2,7 @@
 
 :root {
   --background: #ffffff;
+
   --foreground: #171717;
 }
 
@@ -16,6 +17,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --foreground: #c0c0c0;
   }
 }
 

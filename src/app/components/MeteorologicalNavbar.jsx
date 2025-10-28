@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { Menu } from 'lucide-react'; // ADD THIS IMPORT
 import { defaultStationConfig, systemConfig } from '../config/stations';
 import {
   SystemInfoBar,
@@ -12,24 +13,21 @@ import {
   DateTimeDisplay
 } from './NavbarParts';
 
-// Main Meteorological Navbar Component
 const MeteorologicalNavbar = ({ 
-  serverTime, // New prop for server time
+  serverTime,
   stationConfig = defaultStationConfig,
   systemConfig: sysConfig = systemConfig,
   isOnline = true,
   onLogout = () => console.log('Logout clicked'),
-  onClose = () => console.log('Close clicked')
+  onClose = () => console.log('Close clicked'),
+  onMenuClick // NEW PROP for hamburger menu
 }) => {
-  // Initialize with server time to prevent hydration mismatch
   const [time, setTime] = useState(new Date(serverTime));
 
   useEffect(() => {
-    // Update time every second after initial render
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -40,8 +38,18 @@ const MeteorologicalNavbar = ({
 
         {/* Main Header Row */}
         <div className="flex items-center justify-between px-3 py-1 bg-gray-200">
-           {/* Left Section - Logo and Station */}
-           <div className="flex-1">
+           {/* Left Section - Logo and Station WITH HAMBURGER */}
+           <div className="flex-1 flex items-center gap-2">
+              {/* Hamburger Menu - Only visible on mobile */}
+              {onMenuClick && (
+                <button
+                  onClick={onMenuClick}
+                  className="lg:hidden p-2 hover:bg-gray-300 rounded"
+                  aria-label="Open menu"
+                >
+                  <Menu className="w-5 h-5 text-gray-700" />
+                </button>
+              )}
               <StationLogo stationName={stationConfig.name} />
            </div>
 
@@ -57,7 +65,7 @@ const MeteorologicalNavbar = ({
         </div>
 
         {/* Bottom Row - Navigation Values, Station ID, Date/Time */}
-        <div className="flex items-center justify-between px-3 py-1 bg-gray-200  ">
+        <div className="flex items-center justify-between px-3 py-1 bg-gray-200">
            {/* Left Section - Navigation Values */}
            <NavigationValues station={stationConfig} />
 
