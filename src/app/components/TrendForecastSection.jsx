@@ -99,13 +99,12 @@ const TrendForecastSection = () => {
 
    return (
       <div
-         className="bg-[#c0c0c0] border-2 border-gray-400 h-full flex flex-col"
+         className="bg-gray-300 border-2 border-gray-400 h-full flex flex-col"
          style={{ fontFamily: "Arial, sans-serif" }}>
          {/* Header */}
-         <div className="bg-[#c0c0c0] border-b-2 border-gray-500 px-2 py-0.5 flex-shrink-0">
+         <div className="bg-gray-300 border-b-2 border-gray-500 px-2 py-0.5 flex-shrink-0">
             <h2
-               className="font-bold text-base text-center"
-               style={{ letterSpacing: "0.5px" }}>
+               className="font-bold text-sm text-center">
                TREND LANDING FORECAST FOR DNAS
             </h2>
          </div>
@@ -121,7 +120,7 @@ const TrendForecastSection = () => {
                <select
                   value={trendData.messageType || "METAR"}
                   onChange={(e) => handleChange("messageType", e.target.value)}
-                  className="border border-black px-2 py-1 text-base bg-white h-7">
+                  className="border border-black px-2 py-1 text-base bg-white h-7 w-35">
                   <option value="METAR">METAR</option>
                   <option value="SPECI">SPECI</option>
                   <option value="TAF">TAF</option>
@@ -341,7 +340,7 @@ const TrendForecastSection = () => {
                   type="text"
                   value={trendData.officer || ""}
                   onChange={(e) => handleChange("officer", e.target.value)}
-                  placeholder="OSAKWE MLN"
+                  placeholder="OSAKWE M.N"
                   className="border border-black px-2 py-1 text-base text-center h-7"
                />
                <input type="checkbox" className="w-4 h-4" />

@@ -101,7 +101,7 @@
 - **Framework:** Tailwind CSS (core utilities only, no custom config)
 - **Color Scheme:**
   - Gray backgrounds: `bg-gray-200`, `bg-gray-300`
-  - Borders: `border-gray-400` (2px)
+  - Borders: `border-gray-300` (2px)
   - Highlights: `bg-yellow-100`, `bg-yellow-300` (editable fields)
   - Status colors: `bg-green-200/300` (cloud data), `bg-blue-100` (special fields)
 - **Typography:** 
@@ -110,7 +110,7 @@
   - Inputs: `text-sm` or `text-xs`
 - **Spacing:** `gap-2`, `space-y-2`, `p-3`, `px-3 py-1`
 - **Buttons:** 
-  - Default: `bg-gray-300 hover:bg-gray-400`
+  - Default: `bg-gray-300 hover:bg-zinc-300`
   - Primary: `bg-yellow-200 hover:bg-yellow-300`
   - Action: `bg-red-400`, `bg-blue-400` (with white text)
 
@@ -134,9 +134,9 @@ const ComponentName = () => {
   // Handlers
   
   return (
-    <div className="bg-gray-300 border-2 border-gray-400 rounded">
+    <div className="bg-gray-300 border-2 border-gray-300 rounded">
       {/* Header */}
-      <div className="bg-gray-300 border-b-2 border-gray-400 px-3 py-1.5">
+      <div className="bg-gray-300 border-b-2 border-gray-300 px-3 py-1.5">
         <h2 className="font-bold text-sm">SECTION TITLE</h2>
       </div>
       

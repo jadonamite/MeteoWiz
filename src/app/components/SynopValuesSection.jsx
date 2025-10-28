@@ -43,13 +43,13 @@ const SynopValuesSection = () => {
    });
 
    return (
-      <div className="border-2 border-gray-400 rounded h-full flex  flex-col">
+      <div className="border-2 border-gray-300 rounded h-full flex  flex-col">
          {/* Content - Two rows of SYNOP groups */}
          <div className="flex-1 grid gap-4 overflow-auto">
             {/* First Row - Main SYNOP Groups */}
             <table className="w-full border-collapse text-xs">
                <thead>
-                  <tr className="bg-gray-400">
+                  <tr className="bg-zinc-300">
                      <th className="border border-gray-500 px-2 py-1 font-bold">
                         TIME
                      </th>
@@ -127,7 +127,7 @@ const SynopValuesSection = () => {
             {/* Second Row - Additional SYNOP Groups */}
             <table className="w-full border-collapse text-xs">
                <thead>
-                  <tr className="bg-gray-400">
+                  <tr className="bg-zinc-300">
                      <th className="border border-gray-500 px-2 py-1 font-bold">
                         9hh//
                      </th>

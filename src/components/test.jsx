@@ -9,7 +9,7 @@ const ObservedValues = ({ data = {}, onDataChange }) => {
   };
 
   return (
-    <div className="bg-gray-100 border border-gray-400 p-2">
+    <div className="bg-gray-100 border border-gray-300 p-2">
       <div className="bg-blue-600 text-white text-center py-1 mb-2 font-bold text-sm">
         OBSERVED VALUES
       </div>
@@ -242,7 +242,7 @@ const DerivedValues = ({ observedData = {} }) => {
   const derived = calculateDerivedValues();
 
   return (
-    <div className="bg-gray-100 border border-gray-400 p-2">
+    <div className="bg-gray-100 border border-gray-300 p-2">
       <div className="bg-blue-600 text-white text-center py-1 mb-2 font-bold text-sm">
         DERIVED VALUES
       </div>
@@ -361,7 +361,7 @@ const ForecastPanel = () => {
   });
 
   return (
-    <div className="bg-gray-100 border border-gray-400 p-2">
+    <div className="bg-gray-100 border border-gray-300 p-2">
       <div className="bg-blue-600 text-white text-center py-1 mb-2 font-bold text-sm">
         TREND LANDING FORECAST FOR DNAS
       </div>
@@ -525,7 +525,7 @@ const ForecastPanel = () => {
 // Weather Widget Component
 const WeatherWidget = () => {
   return (
-    <div className="bg-gray-100 border border-gray-400 p-2">
+    <div className="bg-gray-100 border border-gray-300 p-2">
       <div className="bg-blue-600 text-white text-center py-1 mb-2 font-bold text-sm">
         IMAGERY
       </div>
@@ -614,7 +614,7 @@ const MeteorologicalDashboard = () => {
       </div>
 
       {/* Bottom Panel - Data Tables */}
-      <div className="bg-gray-100 border border-gray-400 p-2">
+      <div className="bg-gray-100 border border-gray-300 p-2">
         <div className="bg-green-600 text-white text-center py-1 mb-2 font-bold text-xs">
           METAR DNAS 03030823Z 21008KT 8000 SCT009 27/24 Q1015 →
         </div>
@@ -625,7 +625,7 @@ const MeteorologicalDashboard = () => {
             (item, index) => (
               <button 
                 key={index}
-                className="bg-yellow-200 px-2 py-1 border border-gray-400 hover:bg-yellow-300"
+                className="bg-yellow-200 px-2 py-1 border border-gray-300 hover:bg-yellow-300"
               >
                 {item}
               </button>
@@ -635,20 +635,20 @@ const MeteorologicalDashboard = () => {
 
         {/* Data Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-xs border-collapse border border-gray-400">
+          <table className="w-full text-xs border-collapse border border-gray-300">
             <tbody>
               <tr>
-                <td className="bg-yellow-100 border border-gray-400 px-1">03030Z</td>
-                <td className="border border-gray-400 px-1">42358</td>
-                <td className="border border-gray-400 px-1">72108</td>
-                <td className="border border-gray-400 px-1">51066</td>
-                <td className="border border-gray-400 px-1">20239</td>
-                <td className="border border-gray-400 px-1">30063</td>
-                <td className="border border-gray-400 px-1">40155</td>
-                <td className="border border-gray-400 px-1"></td>
-                <td className="border border-gray-400 px-1"></td>
-                <td className="border border-gray-400 px-1"></td>
-                <td className="border border-gray-400 px-1">84508</td>
+                <td className="bg-yellow-100 border border-gray-300 px-1">03030Z</td>
+                <td className="border border-gray-300 px-1">42358</td>
+                <td className="border border-gray-300 px-1">72108</td>
+                <td className="border border-gray-300 px-1">51066</td>
+                <td className="border border-gray-300 px-1">20239</td>
+                <td className="border border-gray-300 px-1">30063</td>
+                <td className="border border-gray-300 px-1">40155</td>
+                <td className="border border-gray-300 px-1"></td>
+                <td className="border border-gray-300 px-1"></td>
+                <td className="border border-gray-300 px-1"></td>
+                <td className="border border-gray-300 px-1">84508</td>
               </tr>
             </tbody>
           </table>
@@ -688,7 +688,7 @@ const PressureDataTable = () => {
   ];
 
   return (
-    <div className="mt-2 bg-gray-100 border border-gray-400">
+    <div className="mt-2 bg-gray-100 border border-gray-300">
       <table className="w-full text-xs">
         <tbody>
           {pressureData.map((item, index) => (
@@ -711,7 +711,7 @@ const EnhancedWeatherWidget = () => {
   const [selectedView, setSelectedView] = useState('current');
 
   return (
-    <div className="bg-gray-100 border border-gray-400 p-2">
+    <div className="bg-gray-100 border border-gray-300 p-2">
       <div className="bg-blue-600 text-white text-center py-1 mb-2 font-bold text-sm">
         IMAGERY
       </div>
