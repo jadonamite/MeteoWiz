@@ -94,6 +94,35 @@ const DerivedValuesSection = () => {
          qnhInches,
       });
    };
+// Reusable Derived Row Component (read-only) with better alignment
+const DerivedRow = ({ label, value, unit }) => (
+   <div className="flex items-center gap-2 text-sm">
+      <span className="font-bold w-65">{label}</span>
+      <input
+         type="text"
+         value={value}
+         readOnly
+         className="border border-gray-400 px-2 py-1 text-xs w-30 bg-white text-center"
+      />
+      <span className="italic w-14 text-right">{unit}</span>
+   </div>
+);
+
+// Pressure Cell Component for grid layout with better structure
+const PressureCell = ({ label, value, unit, noLabel = false ,highlighted = false}) => (
+   <div className="flex items-center gap-2 text-xs">
+      {label && <span className="font-bold w-18">{label}</span>}
+      {noLabel && <span className="w-14"></span>}
+      <input
+         type="text"
+         value={value}
+         readOnly
+         className={`border border-gray-400 px-2 py-1 text-xs flex-1 bg-white text-center w-30 bg-white text-center ${highlighted ? "bg-yellow-100" : ""
+         }`}
+      />
+      <span className="italic w-14 text-right">{unit}</span>
+   </div>
+);
 
    return (
       <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col overflow-hidden">
@@ -241,33 +270,5 @@ const DerivedValuesSection = () => {
    );
 };
 
-// Reusable Derived Row Component (read-only) with better alignment
-const DerivedRow = ({ label, value, unit }) => (
-   <div className="flex items-center gap-2 text-sm">
-      <span className="font-bold w-65">{label}</span>
-      <input
-         type="text"
-         value={value}
-         readOnly
-         className="border border-gray-400 px-2 py-1 text-xs w-30 bg-white text-center"
-      />
-      <span className="italic w-14 text-right">{unit}</span>
-   </div>
-);
-
-// Pressure Cell Component for grid layout with better structure
-const PressureCell = ({ label, value, unit, noLabel = false }) => (
-   <div className="flex items-center gap-2 text-xs">
-      {label && <span className="font-bold w-18">{label}</span>}
-      {noLabel && <span className="w-14"></span>}
-      <input
-         type="text"
-         value={value}
-         readOnly
-         className="border border-gray-400 px-2 py-1 text-xs flex-1 bg-white text-center"
-      />
-      <span className="italic w-14 text-right">{unit}</span>
-   </div>
-);
 
 export default DerivedValuesSection;

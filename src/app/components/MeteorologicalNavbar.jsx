@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Menu } from 'lucide-react'; // ADD THIS IMPORT
+import { Menu } from 'lucide-react'; 
 import { defaultStationConfig, systemConfig } from '../config/stations';
 import {
   SystemInfoBar,

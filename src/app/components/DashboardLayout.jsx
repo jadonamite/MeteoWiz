@@ -40,7 +40,7 @@ const DashboardLayout = () => {
                   style={{ width: `calc(50% - ${gapSize})` }}
                >
                   {/* Top Row: Observed and Derived */}
-                  <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0" style={{ height: "64vh" }}>
+                  <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0" style={{ height: "68vh" }}>
                      {/* Observed Values - 23% of total width */}
                      {/* = 23% / 50% = 46% of this container, minus half gap */}
                      <div 
@@ -61,7 +61,7 @@ const DashboardLayout = () => {
                   </div>
 
                   {/* SYNOP Register - Spans full width of Observed+Derived */}
-                  <div className="flex-shrink-0" style={{ height: "14vh" }}>
+                  <div className="flex-shrink-0" style={{ height: "12vh" }}>
                      <SynopValuesSection />
                   </div>
                </div>
@@ -71,7 +71,7 @@ const DashboardLayout = () => {
                   className="w-full flex-shrink-0" 
                   style={{ 
                      width: `calc(33% - ${gapSize})`,
-                     height: "82vh" 
+                     height: "78vh" 
                   }}
                >
                   <TrendForecastSection />
@@ -82,7 +82,7 @@ const DashboardLayout = () => {
                   className="w-full flex-shrink-0" 
                   style={{ 
                      width: `calc(17% - ${gapSize})`,
-                     height: "82vh" 
+                     height: "78vh" 
                   }}
                >
                   <ImagerySection />

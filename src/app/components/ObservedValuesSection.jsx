@@ -44,7 +44,7 @@ const ObservedValuesSection = () => {
       <div className="bg-gray-300 border-2 border-gray-400 rounded h-full flex flex-col overflow-hidden">
          {/* Header with Buttons */}
          <div className="bg-gray-300 border-b-2 border-gray-400 px-2 py-1 flex-shrink-0 flex justify-between items-start">
-            <h2 className="font-bold text-xs pt-1">OBSERVED VALUES</h2>
+            <h2 className="font-bold text-sm pt-1">OBSERVED VALUES</h2>
 
             <div className=" absolute grid  gap-1">
                <button
