@@ -249,7 +249,7 @@ const DerivedRow = ({ label, value, unit }) => (
          type="text"
          value={value}
          readOnly
-         className="border border-gray-400 px-2 py-1 text-xs w-35 bg-white text-center"
+         className="border border-gray-400 px-2 py-1 text-xs w-30 bg-white text-center"
       />
       <span className="italic w-14 text-right">{unit}</span>
    </div>

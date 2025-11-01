@@ -193,7 +193,7 @@ const ObservedValuesSection = () => {
                <select
                   value={observedData.cloudAmount || "4"}
                   onChange={(e) => handleChange("cloudAmount", e.target.value)}
-                  className="border border-gray-400 px-1.5 py-0.5 text-xs w-12">
+                  className="border border-gray-400 px-1.5 py-0.5 text-xs w-30">
                   {[...Array(9)].map((_, i) => (
                      <option key={i} value={i}>
                         {i}
@@ -252,14 +252,14 @@ const ObservedValuesSection = () => {
                   type="text"
                   value={observedData.rvr1 || ""}
                   onChange={(e) => handleChange("rvr1", e.target.value)}
-                  className="border border-gray-400 px-1.5 py-0.5 text-xs w-16"
+                  className="border border-gray-400 px-1.5 py-0.5 text-xs w-10"
                />
                <span className="font-bold">RVR2</span>
                <input
                   type="text"
                   value={observedData.rvr2 || ""}
                   onChange={(e) => handleChange("rvr2", e.target.value)}
-                  className="border border-gray-400 px-1.5 py-0.5 text-xs w-16"
+                  className="border border-gray-400 px-1.5 py-0.5 text-xs w-10"
                />
                <button className="bg-red-500 text-white font-bold px-2 py-0.5 text-xs hover:bg-red-600 ml-auto">
                   Refresh
@@ -283,13 +283,13 @@ const ObservedValuesSection = () => {
 
 // Reusable Input Row Component
 const InputRow = ({ label, value, onChange, unit, highlighted = false }) => (
-   <div className="flex items-center gap-1.5 text-xs">
+   <div className="flex items-center gap-2 text-sm">
       <span className="font-bold flex-1">{label}</span>
       <input
          type="text"
          value={value}
          onChange={(e) => onChange(e.target.value)}
-         className={`border border-gray-400 px-1.5 py-0.5 text-xs w-20 ${
+         className={`border border-gray-400 px-2 py-1 text-xs w-30 bg-white text-center ${
             highlighted ? "bg-yellow-100" : ""
          }`}
       />
